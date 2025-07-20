@@ -1,36 +1,31 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تسجيل الدخول - Manhwa App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABDALLAH FOR MANHWA</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h2>تسجيل الدخول</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="اسم المستخدم" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">دخول</button>
-    </form>
-    <p id="error" class="error"></p>
+  <div class="container" id="app">
+    <div class="login" id="login-section">
+      <h2>تسجيل الدخول</h2>
+      <input type="text" id="username" placeholder="الاسم" />
+      <button onclick="login()">دخول</button>
+    </div>
+
+    <div class="dashboard" id="dashboard-section" style="display: none;">
+      <h2>مرحبًا، <span id="display-name"></span></h2>
+      <button onclick="logout()">تسجيل الخروج</button>
+      <h3>رفع فصل (PDF أو ZIP رابط)</h3>
+      <input type="text" id="chapter-link" placeholder="رابط الفصل..." />
+      <button onclick="addChapter()">رفع</button>
+
+      <h3>عرض الفصول</h3>
+      <ul id="chapter-list"></ul>
+    </div>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      if (username === "admin" && password === "1234") {
-        localStorage.setItem("user", username);
-        window.location.href = "dashboard.html";
-      } else {
-        document.getElementById("error").textContent = "اسم المستخدم أو كلمة المرور غير صحيحة";
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
