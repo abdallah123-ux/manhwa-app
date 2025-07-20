@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - Manhwa App</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .chapter-list { margin-top: 20px; text-align: right; }
+    .chapter-item { background: #f9f9f9; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+    .logout { background-color: crimson; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>لوحة التحكم</h2>
+
+    <form id="uploadForm">
+      <input type="url" id="chapterLink" placeholder="أدخل رابط الفصل (PDF أو ZIP)" required />
+      <button type="submit">رفع الفصل</button>
+    </form>
+
+    <div class="chapter-list" id="chapterList">
+      <!-- الفصول المرفوعة ستظهر هنا -->
+    </div>
+
+    <button class="logout" onclick="logout()">تسجيل الخروج</button>
+  </div>
+
+  <script>
+    const listElement = document.getElementById("chapterList");
+    const savedChapters = JSON.parse(localStorage.getItem("chapters") || "[]");
+
+    function renderChapters() {
+      listElement.innerHTML = "";
+      savedChapters.forEach((link, index) => {
+        const item = document.createElement("div");
+        item.className = "chapter-item";
+        item.innerHTML = `<a href="${link}" target="_blank">فصل رقم ${index + 1}</a>`;
+        listElement.appendChild(item);
+      });
+    }
+
+    renderChapters();
+
+    document.getElementById("uploadForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const link = document.getElementById("chapterLink").value;
+      savedChapters.push(link);
+      localStorage.setItem("chapters", JSON.stringify(savedChapters));
+      renderChapters();
+      document.getElementById("chapterLink").value = "";
+    });
+
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    }
+
+    // لو المستخدم لم يسجل دخول يرجع لـ login
+    if (!localStorage.getItem("user")) {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
